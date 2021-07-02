@@ -10,10 +10,11 @@ class BlackJack:
 
     def __init__(self):
         '''初始化游戏'''
-        self.all_cards = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K',
+        self.all_cards_ = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K',
                           'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K',
                           'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K',
                           'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', ]
+        self.all_cards = self.all_cards_[:]
         self.deller = Deller()
         self.player = Player()
         self.player.load_inf()
@@ -23,10 +24,7 @@ class BlackJack:
 
     def new_game(self):
         '''开始一局新游戏'''
-        self.all_cards = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K',
-                          'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K',
-                          'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K',
-                          'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', ]
+        self.all_cards = self.all_cards_[:]
         self.deller.new_game()
         self.player.new_game()
 
@@ -100,7 +98,13 @@ class BlackJack:
         print('*' * 10)
         self.new_game()
         print(f'本金剩余：{self.player.capital}')
-        self.bet = min(self.player.capital, int(input('请下注：')))
+        while True:
+            try:
+                bet = int(input('请下注：'))
+                break
+            except:
+                print('请输入正确的下注')
+        self.bet = min(self.player.capital, bet)
         if self.player.capital == self.bet:
             print('All In！！！')
         # 庄家抽一张牌
@@ -202,12 +206,11 @@ class BlackJack:
             elif sum(self.deller.cards) == sum(self.player.cards):
                 self.player.active = 11
                 self.player.update_capital(self.bet)
-                print('平局！')
+                print('平局！要再来一局吗？(Y/N)')
             else:
                 self.player.update_capital(self.bet)
                 print('恭喜获胜，要再来一局吗？(Y/N)')
             self.end_or_continue()
-            continue
 
 
 if __name__ == '__main__':
