@@ -1,5 +1,5 @@
 from blackjack import BlackJack
 
-
-bj = BlackJack()
-bj.run_game()
+if __name__ == "__main__":
+    bj = BlackJack()
+    bj.run_game()
