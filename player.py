@@ -15,7 +15,7 @@ class Player:
         '''加载玩家信息'''
         self.user = input('请输入用户名：')
         try:
-            with open(f'data\{self.user}.json') as f:
+            with open(f'./data/{self.user}.json') as f:
                 inf = json.load(f)
                 while True:
                     password = input('请输入密码：')
@@ -31,7 +31,7 @@ class Player:
                         print('密码错误')
                         sleep(1)
         except:
-            with open(f'data\{self.user}.json', 'w') as f:
+            with open(f'./data/{self.user}.json', 'w') as f:
                 print('欢迎新用户！')
                 self.password = input('创建密码：')
                 print('初始账号余额100,000元')
@@ -76,5 +76,5 @@ class Player:
             print('获得救济1000元')
             self.r -= 1000
             sleep(1)
-        with open(f'data\{self.user}.json', 'w') as f:
+        with open(f'./data/{self.user}.json', 'w') as f:
             json.dump([self.password, self.capital], f)
